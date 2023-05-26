@@ -38,9 +38,9 @@ export const PROTOCOLS = [
   ],
 ]
 
-export const readSettings = async (): Promise<GlobalSettings> => {
+export const readConfig = async (): Promise<GlobalSettings> => {
   try {
-    const settings = await invoke<SettingsStruct>('read_settings')
+    const settings = await invoke<SettingsStruct>('read_config')
 
     if (settings === null || settings.auth_key === '') {
       await message.warning(

@@ -1,7 +1,7 @@
 import { Layout, Spin } from 'antd'
 import React, { lazy, memo, useCallback, useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
-import { readSettings } from '~/lib/settings'
+import { readConfig } from '~/lib/settings'
 import '~/styles/chat.scss'
 
 const ChatContent = lazy(() => import('~/components/Content'))
@@ -31,7 +31,7 @@ const Chat = memo(() => {
 
   useEffect(() => {
     const fetchSettings = async (): Promise<void> => {
-      const settings = await readSettings()
+      const settings = await readConfig()
 
       setSettings(settings)
 
