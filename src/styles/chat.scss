@@ -1,0 +1,185 @@
+.chat-title {
+  background-color: #fff;
+  text-align: center;
+  margin-bottom: 5px;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+#root {
+  .ant-layout-content {
+    position: relative;
+    height: 100%;
+  }
+}
+
+#chat-content {
+  height: 100%;
+  padding-top: 10px;
+  overflow-y: overlay;
+  overflow-x: hidden;
+}
+
+.list {
+  --sentColor: #0b93f6;
+  --receiveColor: #e5e5ea;
+  --bg: #fff;
+
+  display: flex;
+  flex-direction: column;
+  margin: 0 20px 0 10px;
+  padding: 0;
+  list-style: none;
+  font-family: var(--user-font);
+
+  li > p {
+    margin: 0;
+  }
+
+  li > p:nth-child(n + 2) {
+    margin-top: 5px;
+  }
+
+  li > code,
+  p > code {
+    margin: 0 2px;
+    padding: 0.1em 0.35em;
+    border-radius: 3px;
+    vertical-align: baseline;
+    font-weight: 400;
+    font-size: 14px;
+    font-family: var(--user-monospace);
+  }
+}
+
+[data-theme='dark'] {
+  .list {
+    --bg: #161515;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .max {
+    max-width: 1200px;
+  }
+
+  .max-with-menu {
+    max-width: 1000px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .max {
+    max-width: 100%;
+  }
+
+  .max-with-menu {
+    max-width: 100%;
+  }
+}
+
+.shared {
+  position: relative; /* Setup a relative container for our psuedo elements */
+  margin-bottom: 15px;
+  padding: 10px 20px;
+  line-height: 24px;
+  word-wrap: break-word; /* Make sure the text wraps to multiple lines if long */
+  border-radius: 25px;
+
+  &:before {
+    width: 20px;
+  }
+
+  &:after {
+    width: 26px;
+    background-color: #f5f5f5; /* All tails have the same bg cutout */
+  }
+
+  &:before,
+  &:after {
+    position: absolute;
+    bottom: 0;
+    height: 25px; /* height of our bubble "tail" - should match the border-radius above */
+    content: '';
+  }
+
+  &:last-child {
+    margin-bottom: 60px;
+  }
+}
+
+.sent {
+  align-self: flex-end;
+  color: white;
+  background: var(--sentColor);
+
+  &:before {
+    right: -7px;
+    background-color: var(--sentColor);
+    border-bottom-left-radius: 16px 14px;
+  }
+
+  &:after {
+    right: -26px;
+    border-bottom-left-radius: 10px;
+  }
+
+  p > code {
+    background: #327394;
+    color: #fff;
+  }
+}
+
+.received {
+  align-self: flex-start;
+  color: black;
+  background: var(--receiveColor);
+
+  &:before {
+    left: -7px;
+    background-color: var(--receiveColor);
+    border-bottom-right-radius: 16px 14px;
+  }
+
+  &:after {
+    left: -26px;
+    border-bottom-right-radius: 10px;
+  }
+
+  p > code,
+  li > code {
+    background: #263238;
+    color: #ffcb6b;
+  }
+}
+
+.noTail {
+  margin-bottom: 2px;
+
+  &:before,
+  &:after {
+    opacity: 0;
+  }
+}
+
+.export {
+  &:after {
+    background-color: transparent;
+  }
+
+  &::before {
+    background-color: transparent;
+  }
+}
+
+#input {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  position: absolute;
+  bottom: 20px;
+}

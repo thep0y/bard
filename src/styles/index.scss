@@ -1,0 +1,74 @@
+:root {
+  --user-font: 'SF Pro Display', '苹方-简', '方正悠黑', '方正悠黑 GBK',
+    '方正修黑+', '方正修黑+ GBK', '思源黑体', sans-serif;
+  --user-monospace: 'Luxi Mono', 'Source Code Pro', Consolas, Monaco,
+    'Andale Mono', 'Ubuntu Mono', 'Courier New', 'Monaco', var(--user-font);
+}
+
+* {
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-track {
+  background-color: #fff0; /* or add it to the track */
+}
+
+#root {
+  height: 100%;
+  background-color: #f5f5f5;
+  overflow: hidden;
+
+  .ant-float-btn-icon {
+    color: inherit;
+  }
+
+  .ant-float-btn-default {
+    background-color: #ffffff21;
+    color: #00000021;
+
+    .ant-badge {
+      color: inherit;
+
+      .ant-float-btn-body {
+        background-color: #ffffff21;
+      }
+    }
+  }
+
+  .ant-float-btn-default:hover {
+    background-color: #fff;
+    color: #000;
+
+    .ant-float-btn-body {
+      background-color: #fff;
+    }
+  }
+
+  .ant-spin-nested-loading > div > .ant-spin {
+    position: fixed;
+    max-height: initial;
+  }
+}
+
+body {
+  font-family: var(--user-font);
+}
