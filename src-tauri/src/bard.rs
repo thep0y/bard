@@ -56,13 +56,11 @@ fn new_http_client_with_proxy(proxy: &str) -> Result<Client> {
     Ok(client)
 }
 
-fn new_headers(psid: &str, pdidts: &str) -> HeaderMap {
+fn new_headers(psid: &str) -> HeaderMap {
     let mut header = HeaderMap::new();
     header.insert(
         "Cookie",
-        format!("__Secure-1PSID={}; __Secure-1PSIDTS={}", psid, pdidts)
-            .parse()
-            .unwrap(),
+        format!("__Secure-1PSID={}", psid).parse().unwrap(),
     );
 
     header
@@ -76,9 +74,9 @@ pub fn new_client(proxy_config: &ProxyConfig) -> Result<Client> {
     }
 }
 
-async fn get_snlm0e(proxy_config: &ProxyConfig, psid: &str, pdidts: &str) -> Result<String> {
+async fn get_snlm0e(proxy_config: &ProxyConfig, psid: &str) -> Result<String> {
     let client = new_client(proxy_config)?;
-    let headers = new_headers(psid, pdidts);
+    let headers = new_headers(psid);
 
     let url = base_url(proxy_config);
 
