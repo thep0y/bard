@@ -1,4 +1,5 @@
-import { Layout, Spin } from 'antd'
+import { invoke } from '@tauri-apps/api'
+import { Layout, Spin, message } from 'antd'
 import React, { lazy, memo, useCallback, useEffect, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router-dom'
 import { readConfig } from '~/lib/settings'
@@ -47,10 +48,53 @@ const Chat = memo(() => {
     async (prompt: string): Promise<void> => {
       // const createAt = newMessage(content)
 
-      setWaiting(true)
-      setRetry(false)
+      // setWaiting(true)
+      // setRetry(false)
 
       console.log('sending prompt', prompt)
+
+      const proxyConfig: ProxyConfig = {
+        method: 'proxy',
+        proxy: {
+          protocol: 'socks5h',
+          host: '127.0.0.1',
+          port: 1086,
+        },
+      }
+
+      const psid = ''
+
+      let snlm0e: string
+
+      try {
+        snlm0e = await invoke<string>('get_snlm0e', {
+          proxyConfig,
+          psid,
+        })
+      } catch (e) {
+        void message.error(String(e))
+
+        return
+      }
+
+      const requestId = 243279
+
+      try {
+        await invoke('get_answer', {
+          proxyConfig,
+          snlm0e,
+          prompt,
+          requestId,
+          psid,
+          conversationId: '',
+          responseId: '',
+          choiceId: '',
+        })
+      } catch (e) {
+        void message.error(String(e))
+
+        return
+      }
     },
     [messages]
   )

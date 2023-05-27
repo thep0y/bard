@@ -44,7 +44,7 @@ impl ProxyConfig {
     pub fn to_string(&self) -> String {
         if self.method == "proxy" {
             let proxy = self.proxy.as_ref().unwrap();
-            return format!("{}{}:{}", proxy.protocol, proxy.host, proxy.port);
+            return format!("{}://{}:{}", proxy.protocol, proxy.host, proxy.port);
         }
 
         self.reverse_proxy.clone().unwrap()

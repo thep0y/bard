@@ -87,7 +87,7 @@ const MessageInput = memo(
 
             <TextArea
               value={chatMessage}
-              placeholder="Input the prompt you want to send"
+              placeholder="Enter a prompt here"
               onChange={onChange}
               onKeyDown={onKeyDown}
               maxLength={2000}

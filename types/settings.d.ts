@@ -10,12 +10,14 @@ declare type ReverseProxy = string
 
 type ProxyMethod = 'direct' | 'proxy' | 'reverse-proxy'
 
+interface ProxyConfig {
+  method: ProxyMethod
+  proxy?: Proxy
+  reverseProxy?: ReverseProxy
+}
+
 interface GlobalSettings {
-  proxy?: {
-    method: ProxyMethod
-    proxy?: Proxy
-    reverseProxy?: ReverseProxy
-  }
+  proxy?: ProxyConfig
   authKey: string
   showLineNumbers: boolean
 }

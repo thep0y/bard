@@ -10,6 +10,7 @@ mod logger;
 extern crate log;
 extern crate simplelog;
 
+use crate::bard::{get_answer, get_snlm0e};
 use crate::config::read_config;
 use config::APP_CONFIG_DIR;
 use logger::{log_level, logger_config};
@@ -34,7 +35,11 @@ fn main() {
     .unwrap();
 
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![read_config])
+        .invoke_handler(tauri::generate_handler![
+            read_config,
+            get_snlm0e,
+            get_answer
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
