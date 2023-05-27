@@ -27,6 +27,10 @@ fn base_url(proxy_config: &ProxyConfig) -> String {
     }
 }
 
+fn api_url(proxy_config: &ProxyConfig, api: &str) -> String {
+    format!("{}{}", base_url(proxy_config), api)
+}
+
 fn new_request_id() -> u32 {
     let mut rng = rand::thread_rng();
     rng.gen_range(100000..1000000)
@@ -95,3 +99,59 @@ async fn get_snlm0e(proxy_config: &ProxyConfig, psid: &str) -> Result<String> {
 
     Err("SNlM0e value not found in response".to_string())
 }
+
+fn new_request_message(
+    prompt: &str,
+    conversation_id: &str,
+    response_id: &str,
+    choice_id: &str,
+) -> String {
+    let text = format!(
+        r#"[null,"[[\"{}\",null,null,[]],[\"en\"],[\"{}\",\"{}\",\"{}\"]]"]"#,
+        prompt, conversation_id, response_id, choice_id
+    );
+
+    return text;
+}
+
+async fn get_answer(
+    proxy_config: &ProxyConfig,
+    snlm0e: &str,
+    prompt: &str,
+    request_id: u32,
+    conversation_id: &str,
+    response_id: &str,
+    choice_id: &str,
+) -> Result<()> {
+    let params = [
+        ("bl", "boq_assistant-bard-web-server_20230523.13_p1"),
+        ("rt", "c"),
+        ("_reqid", &request_id.to_string()),
+    ];
+
+    let msg = new_request_message(prompt, conversation_id, response_id, choice_id);
+    let form = HashMap::from([("f.req", msg.as_str()), ("at", snlm0e)]);
+
+    let url = api_url(
+        proxy_config,
+        "_/BardChatUi/data/assistant.lamda.BardFrontendService/StreamGenerate",
+    );
+
+    let client = new_client(proxy_config)?;
+
+    let response = client
+        .post(url)
+        .query(&params)
+        .form(&form)
+        .send()
+        .await
+        .map_err(|e| e.to_string())?;
+
+    let content = response.text().await.unwrap();
+
+    println!("{content}");
+
+    Ok(())
+}
+
+fn parse_response(content: &str) {}
